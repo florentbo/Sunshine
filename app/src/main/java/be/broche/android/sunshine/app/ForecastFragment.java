@@ -60,14 +60,25 @@ public class ForecastFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            FetchWeatherTask task = new FetchWeatherTask();
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            int cityId = preferences.getInt(getString(R.string.pref_location_default), R.string.pref_location_default);
-            task.execute(cityId);
+            updateWeather();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateWeather() {
+        FetchWeatherTask task = new FetchWeatherTask();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String cityId = preferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        Log.v("cityId", "XXXXXXXXXXXXXXXXX " + cityId);
+        task.execute(cityId);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
     }
 
     @Override
@@ -83,7 +94,6 @@ public class ForecastFragment extends Fragment {
                         R.layout.list_item_forecast,
                         R.id.list_item_forecast_textview,
                             weeksForecast);
-
 
 
         ListView l = (ListView) rootView.findViewById(R.id.listview_forecast);
@@ -107,7 +117,7 @@ public class ForecastFragment extends Fragment {
 
 
 
-    public class FetchWeatherTask extends AsyncTask<Integer, Void, String[]> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         @Override
         protected void onPostExecute(String[] result) {
@@ -121,7 +131,9 @@ public class ForecastFragment extends Fragment {
         }
 
         @Override
-        protected String[] doInBackground(Integer... params) {
+        protected String[] doInBackground(String... params) {
+            Log.v("doInBackground", "XXXXXXXXXXXXXXXXX " + params[0]);
+
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -130,7 +142,7 @@ public class ForecastFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
             int numDays = 7;
-            int query_city_id = 2800866;
+            int query_city_id = Integer.valueOf(params[0]);
 
             try {
                 // Construct the URL for the OpenWeatherMap query
@@ -160,6 +172,8 @@ public class ForecastFragment extends Fragment {
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
+                Log.v("urlConnection", "XXXXXXXXXXXXXXXXX " + urlConnection);
+
                 urlConnection.connect();
 
                 // Read the input stream into a String
@@ -186,7 +200,7 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.e("ForecastFragment", "XXXXXXXXXXXXXXXXX " + forecastJsonStr);
+                Log.v("ForecastFragment", "XXXXXXXXXXXXXXXXX " + forecastJsonStr);
             } catch (IOException e) {
                 Log.e("ForecastFragment", "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attempting

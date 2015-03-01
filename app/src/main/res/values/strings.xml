@@ -7,16 +7,32 @@
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
 
+    <string name="action_map">Map</string>
+    <string name="action_share">Share</string>
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
-
     <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_location_key" translatable="false">location</string>
-
     <!-- Default city id for location preference [CHAR LIMIT=NONE] -->
     <!-- 2800866 is the brussels city id -->
-
     <string name="pref_location_default" translatable="false">2800866</string>
+
+    <string name="pref_temperature_units_dialog_title">Pick your units</string>
+    <string name="pref_temperature_units_summary">Select your units preferences</string>
+    <string name="pref_temperature_units_title">Select your units</string>
+
+    <string name="pref_temperature_units_key" translatable="false">temp_preference</string>
+    <string name="pref_temperature_units_default" translatable="false">Metric</string>
+
+    <string-array name="entries_temperature_units">
+       <item>Metric</item>
+       <item>Imperial</item>
+    </string-array>
+
+    <string-array name="entry_values_temperature_units">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
 
 </resources>
