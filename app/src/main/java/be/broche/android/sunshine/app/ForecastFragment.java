@@ -71,10 +71,8 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        //List<String> weeksForecast = Arrays.asList("Today", "Tomorow", "Weds");
         List<String> weeksForecast = new ArrayList<>();
 
-        //ArrayAdapter<String>
          adapter = new ArrayAdapter<>
                     (getActivity(),
                         R.layout.list_item_forecast,

@@ -1,7 +1,6 @@
 package be.broche.android.sunshine.app;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.format.Time;
@@ -29,7 +28,7 @@ class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
 
     private ArrayAdapter<String> adapter;
-    private final Context mContext = null;
+    //private final Context mContext = null;
 
     FetchWeatherTask(ArrayAdapter<String> adapter) {
         this.adapter = adapter;
